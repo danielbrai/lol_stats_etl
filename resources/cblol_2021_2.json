@@ -1,0 +1,110 @@
+{
+  "season": 2021,
+  "split": 2,
+  "teams": [
+    {
+      "team": "Flamengo Esports",
+      "lineup": [
+        "Parang",
+        "Ranger",
+        "Tutsz",
+        "Absolut",
+        "RedBert"
+      ]
+    },
+    {
+      "team": "FURIA Esports",
+      "lineup": [
+        "Tyrin",
+        "DiamondProx",
+        "Anyyy",
+        "ST3PZ",
+        "Jockster"
+      ]
+    },
+    {
+      "team": "INTZ",
+      "lineup": [
+        "Hauz",
+        "Sting",
+        "Envy",
+        "micaO",
+        "Professor"
+      ]
+    },
+    {
+      "team": "KaBuM! e-Sports",
+      "lineup": [
+        "Wizer",
+        "Ryan",
+        "Evrot",
+        "Disave",
+        "Scuro"
+      ]
+    },
+    {
+      "team": "LOUD",
+      "lineup": [
+        "Tay",
+        "Mewkyo",
+        "dyNquedo",
+        "DudsTheBoy",
+        "Ceos"
+      ]
+    },
+    {
+      "team": "Netshoes Miners",
+      "lineup": [
+        "Truklax",
+        "Reversed",
+        "Sephis",
+        "Hugato",
+        "NOsFerus",
+        "Piloto",
+        "Drop",
+        "Hawk"
+      ]
+    },
+    {
+      "team": "paiN Gaming",
+      "lineup": [
+        "Robo",
+        "CarioK",
+        "tinowns",
+        "brTT",
+        "Luci"
+      ]
+    },
+    {
+      "team": "RED Canids",
+      "lineup": [
+        "Guigo",
+        "Aegis",
+        "Avenger",
+        "TitaN",
+        "JoJo"
+      ]
+    },
+    {
+      "team": "Rensga Esports",
+      "lineup": [
+        "Kiari",
+        "Croc",
+        "Yuri",
+        "Marfz",
+        "Trigo",
+        "Damage"
+      ]
+    },
+    {
+      "team": "Vorax Liberty",
+      "lineup": [
+        "fNb",
+        "Yampi",
+        "Krastyel",
+        "Matsukaze",
+        "Wos"
+      ]
+    }
+  ]
+}
