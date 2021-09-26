@@ -18,3 +18,7 @@ class RiotRestClientConstraint(metaclass=abc.ABCMeta):
     @abc.abstractmethod
     def get_champions_data(self):
         return
+
+    @abc.abstractmethod
+    def get_maps_data(self):
+        return

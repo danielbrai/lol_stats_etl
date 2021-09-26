@@ -28,3 +28,10 @@ class DatabaseRepositoryConstraint(metaclass=abc.ABCMeta):
     def save_items_in_database(self, champions_data: List[Item]):
         pass
 
+    @abc.abstractmethod
+    def save_maps_in_database(self, champions_data: List[Item]):
+        pass
+
+
+
+

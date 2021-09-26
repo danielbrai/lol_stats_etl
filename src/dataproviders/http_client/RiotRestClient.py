@@ -4,8 +4,9 @@ from src.core.constraints.RiotRestClientConstraint import RiotRestClientConstrai
 
 
 class RiotRestClient(RiotRestClientConstraint):
-    def __init__(self):
-        self.prop_reader = PropertyReader()
+
+    def __init__(self, property_reader: PropertyReader):
+        self.prop_reader = property_reader
         auth_token = self.prop_reader.get_property_key("API RIOT", "auth_token")
         self.headers = {'X-Riot-Token': auth_token}
 
@@ -39,3 +40,9 @@ class RiotRestClient(RiotRestClientConstraint):
         items_data_endpoint = self.prop_reader.get_property_key("API RIOT", "items_data_endpoint")
         response = requests.get(url=items_data_endpoint, headers=self.headers)
         return response
+
+    def get_maps_data(self):
+        maps_data_endpoint = self.prop_reader.get_property_key("API RIOT", "maps_data_endpoint")
+        response = requests.get(url=maps_data_endpoint, headers=self.headers)
+        return response
+

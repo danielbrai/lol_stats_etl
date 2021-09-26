@@ -3,6 +3,8 @@ import mysql.connector
 
 from src.core.constraints.DatabaseRepositoryConstraint import DatabaseRepositoryConstraint
 from src.core.models.Champion import Champion
+from src.core.models.Item import Item
+from src.core.models.Map import Map
 from src.core.models.Team import Team
 
 
@@ -37,6 +39,13 @@ class MySqlDatabaseRepository(DatabaseRepositoryConstraint):
     def save_items_in_database(self, champions_data: List[Champion]):
         values_to_insert = ','.join(list(f'({champion.id}, "{champion.name}")' for champion in champions_data)).replace("'", "''")
         insert_clause = f'INSERT INTO lol_pro_players_stats.items (id, name) VALUES {values_to_insert}'
+        cursor = self.mydb.cursor()
+        cursor.execute(insert_clause)
+        self.mydb.commit()
+
+    def save_maps_in_database(self, map_info_data: List[Map]):
+        values_to_insert = ','.join(list(f'({map_info.riot_id}, "{map_info.name}", "{map_info.notes}")' for map_info in map_info_data)).replace("'", "''")
+        insert_clause = f'INSERT INTO lol_pro_players_stats.maps (riot_map_id, name, notes) VALUES {values_to_insert}'
         cursor = self.mydb.cursor()
         cursor.execute(insert_clause)
         self.mydb.commit()
