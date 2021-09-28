@@ -4,7 +4,6 @@ from src.core.constraints.RiotRestClientConstraint import RiotRestClientConstrai
 
 
 class RiotRestClient(RiotRestClientConstraint):
-
     def __init__(self, property_reader: PropertyReader):
         self.prop_reader = property_reader
         auth_token = self.prop_reader.get_property_key("API RIOT", "auth_token")
@@ -50,3 +49,10 @@ class RiotRestClient(RiotRestClientConstraint):
         queue_data_endpoint = self.prop_reader.get_property_key("API RIOT", "queue_data_endpoint")
         response = requests.get(url=queue_data_endpoint, headers=self.headers)
         return response
+
+    def get_game_modes_data(self):
+        game_modes_data_endpoint = self.prop_reader.get_property_key("API RIOT", "game_modes_endpoint")
+        response = requests.get(url=game_modes_data_endpoint, headers=self.headers)
+        return response
+
+

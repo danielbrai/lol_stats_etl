@@ -10,4 +10,4 @@ class SaveChampionsDataInDatabaseUsecase:
         self.repository = repository
 
     def execute(self, champions_data: List[Champion]):
-        return self.repository.save_champions_in_database(champions_data)
+        self.repository.save_champions_in_database(champions_data)

@@ -27,4 +27,8 @@ class RiotRestClientConstraint(metaclass=abc.ABCMeta):
     def get_queue_data(self):
         return
 
+    @abc.abstractmethod
+    def get_game_modes_data(self):
+        return
+
 

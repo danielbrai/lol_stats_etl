@@ -10,4 +10,4 @@ class SaveMapsDataInDatabaseUsecase:
         self.repository = repository
 
     def execute(self, items_data: List[Map]):
-        return self.repository.save_maps_in_database(items_data)
+        self.repository.save_maps_in_database(items_data)

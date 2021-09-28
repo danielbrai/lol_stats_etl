@@ -2,6 +2,7 @@ import abc
 from typing import List
 
 from src.core.models.Champion import Champion
+from src.core.models.GameMode import GameMode
 from src.core.models.Item import Item
 from src.core.models.Map import Map
 from src.core.models.Queue import Queue
@@ -39,7 +40,11 @@ class DatabaseRepositoryConstraint(metaclass=abc.ABCMeta):
         pass
 
     @abc.abstractmethod
-    def get_map_by_name(self, map_name):
+    def get_map_by_name(self, map_name: str):
+        pass
+
+    @abc.abstractmethod
+    def save_game_modes_in_database(self, game_modes_data: List[GameMode]):
         pass
 
 
