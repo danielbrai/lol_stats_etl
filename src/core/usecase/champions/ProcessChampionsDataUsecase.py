@@ -1,5 +1,5 @@
-from src.core.usecase.RetrieveChampionsDataUsecase import RetrieveChampionsDataUsecase
-from src.core.usecase.SaveChampionsDataInDatabaseUsecase import SaveChampionsDataInDatabaseUsecase
+from src.core.usecase.champions.RetrieveChampionsDataUsecase import RetrieveChampionsDataUsecase
+from src.core.usecase.champions.SaveChampionsDataInDatabaseUsecase import SaveChampionsDataInDatabaseUsecase
 
 
 class ProcessChampionsDataUsecase:

@@ -1,4 +1,4 @@
-class Map:
+class MapModel:
 
     def __init__(self, id, riot_map_id, name, notes):
         self.id = id

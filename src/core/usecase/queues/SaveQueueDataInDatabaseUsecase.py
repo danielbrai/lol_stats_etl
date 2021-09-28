@@ -1,13 +1,13 @@
 from typing import List
 
 from src.core.constraints.DatabaseRepositoryConstraint import DatabaseRepositoryConstraint
-from src.core.models.Champion import Champion
+from src.core.usecase.queues.QueueModel import QueueModel
 
 
-class SaveChampionsDataInDatabaseUsecase:
+class SaveQueueDataInDatabaseUsecase:
 
     def __init__(self, repository: DatabaseRepositoryConstraint):
         self.repository = repository
 
-    def execute(self, champions_data: List[Champion]):
-        self.repository.save_champions_in_database(champions_data)
+    def execute(self, queue_data: List[QueueModel]):
+        self.repository.save_queue_in_database(queue_data)

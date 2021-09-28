@@ -1,5 +1,5 @@
-from src.core.usecase.RetrieveQueueInfoUsecase import RetrieveQueueInfoUsecase
-from src.core.usecase.SaveQueueDataInDatabaseUsecase import SaveQueueDataInDatabaseUsecase
+from src.core.usecase.queues.RetrieveQueueInfoUsecase import RetrieveQueueInfoUsecase
+from src.core.usecase.queues.SaveQueueDataInDatabaseUsecase import SaveQueueDataInDatabaseUsecase
 
 
 class ProcessQueueDataUsecase:

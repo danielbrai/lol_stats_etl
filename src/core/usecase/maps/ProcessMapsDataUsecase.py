@@ -1,5 +1,5 @@
-from src.core.usecase.RetrieveMapsInfoUsecase import RetrieveMapsInfoUsecase
-from src.core.usecase.SaveMapsDataInDatabaseUsecase import SaveMapsDataInDatabaseUsecase
+from src.core.usecase.maps.RetrieveMapsInfoUsecase import RetrieveMapsInfoUsecase
+from src.core.usecase.maps.SaveMapsDataInDatabaseUsecase import SaveMapsDataInDatabaseUsecase
 
 
 class ProcessMapsDataUsecase:

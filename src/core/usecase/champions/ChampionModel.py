@@ -1,4 +1,4 @@
-class Item:
+class ChampionModel:
 
     def __init__(self, id: int, name: str):
         self.id = id

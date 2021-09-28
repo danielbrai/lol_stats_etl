@@ -1,5 +1,5 @@
-from src.core.usecase.RetrieveGameModesInfoUsecase import RetrieveGameModesInfoUsecase
-from src.core.usecase.SaveGameModesDataInDatabaseUsecase import SaveGameModesDataInDatabaseUsecase
+from src.core.usecase.game_modes.RetrieveGameModesInfoUsecase import RetrieveGameModesInfoUsecase
+from src.core.usecase.game_modes.SaveGameModesDataInDatabaseUsecase import SaveGameModesDataInDatabaseUsecase
 
 
 class ProcessGameModesDataUsecase:

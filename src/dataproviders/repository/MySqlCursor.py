@@ -1,4 +1,6 @@
-import mysql
+from typing import List
+
+import mysql.connector
 
 
 class MySqlCursor:
@@ -15,3 +17,9 @@ class MySqlCursor:
         cursor = self.mydb.cursor()
         cursor.executemany(insert_clause, values_to_insert)
         self.mydb.commit()
+        cursor.close()
+
+    def get_record(self, select_clause: str, query_params: ()):
+        cursor = self.mydb.cursor()
+        cursor.execute(select_clause, query_params)
+        return cursor.fetchone()

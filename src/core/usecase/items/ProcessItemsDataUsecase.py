@@ -1,5 +1,5 @@
-from src.core.usecase.RetrieveItemsDataUsecase import RetrieveItemsDataUsecase
-from src.core.usecase.SaveItemsDataInDatabaseUsecase import SaveItemsDataInDatabaseUsecase
+from src.core.usecase.items.RetrieveItemsDataUsecase import RetrieveItemsDataUsecase
+from src.core.usecase.items.SaveItemsDataInDatabaseUsecase import SaveItemsDataInDatabaseUsecase
 
 
 class ProcessItemsDataUsecase:

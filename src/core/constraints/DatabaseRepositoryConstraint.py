@@ -1,18 +1,18 @@
 import abc
 from typing import List
 
-from src.core.models.Champion import Champion
-from src.core.models.GameMode import GameMode
-from src.core.models.Item import Item
-from src.core.models.Map import Map
-from src.core.models.Queue import Queue
-from src.core.models.Team import Team
+from src.core.usecase.champions.ChampionModel import ChampionModel
+from src.core.usecase.game_modes.GameModeModel import GameModeModel
+from src.core.usecase.items.ItemModel import ItemModel
+from src.core.usecase.maps.MapModel import MapModel
+from src.core.usecase.queues.QueueModel import QueueModel
+from src.core.usecase.TeamModel import TeamModel
 
 
 class DatabaseRepositoryConstraint(metaclass=abc.ABCMeta):
 
     @abc.abstractmethod
-    def save_teams(self, teams: List[Team]):
+    def save_teams(self, teams: List[TeamModel]):
         return
 
     @abc.abstractmethod
@@ -24,19 +24,19 @@ class DatabaseRepositoryConstraint(metaclass=abc.ABCMeta):
         return
 
     @abc.abstractmethod
-    def save_champions_in_database(self, champions_data: List[Champion]):
+    def save_champions_in_database(self, champions_data: List[ChampionModel]):
         pass
 
     @abc.abstractmethod
-    def save_items_in_database(self, champions_data: List[Item]):
+    def save_items_in_database(self, champions_data: List[ItemModel]):
         pass
 
     @abc.abstractmethod
-    def save_maps_in_database(self, champions_data: List[Map]):
+    def save_maps_in_database(self, champions_data: List[MapModel]):
         pass
 
     @abc.abstractmethod
-    def save_queue_in_database(self, champions_data: List[Queue]):
+    def save_queue_in_database(self, champions_data: List[QueueModel]):
         pass
 
     @abc.abstractmethod
@@ -44,7 +44,7 @@ class DatabaseRepositoryConstraint(metaclass=abc.ABCMeta):
         pass
 
     @abc.abstractmethod
-    def save_game_modes_in_database(self, game_modes_data: List[GameMode]):
+    def save_game_modes_in_database(self, game_modes_data: List[GameModeModel]):
         pass
 
 

@@ -1,4 +1,4 @@
-class Queue:
+class QueueModel:
 
     def __init__(self, id, map_id, description, notes):
         self.id = id
