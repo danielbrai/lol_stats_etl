@@ -10,5 +10,5 @@ class ProcessMapsDataUsecase:
         self.save_maps_data_in_database_usecase = save_maps_data_in_database_usecase
 
     def execute(self):
-        champions_data = self.retrieve_maps_data_usecase.execute()
-        self.save_maps_data_in_database_usecase.execute(champions_data)
+        maps_data = self.retrieve_maps_data_usecase.execute()
+        self.save_maps_data_in_database_usecase.execute(maps_data)

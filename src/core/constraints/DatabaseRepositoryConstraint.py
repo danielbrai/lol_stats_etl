@@ -3,6 +3,8 @@ from typing import List
 
 from src.core.models.Champion import Champion
 from src.core.models.Item import Item
+from src.core.models.Map import Map
+from src.core.models.Queue import Queue
 from src.core.models.Team import Team
 
 
@@ -29,8 +31,17 @@ class DatabaseRepositoryConstraint(metaclass=abc.ABCMeta):
         pass
 
     @abc.abstractmethod
-    def save_maps_in_database(self, champions_data: List[Item]):
+    def save_maps_in_database(self, champions_data: List[Map]):
         pass
+
+    @abc.abstractmethod
+    def save_queue_in_database(self, champions_data: List[Queue]):
+        pass
+
+    @abc.abstractmethod
+    def get_map_by_name(self, map_name):
+        pass
+
 
 
 

@@ -22,3 +22,9 @@ class RiotRestClientConstraint(metaclass=abc.ABCMeta):
     @abc.abstractmethod
     def get_maps_data(self):
         return
+
+    @abc.abstractmethod
+    def get_queue_data(self):
+        return
+
+

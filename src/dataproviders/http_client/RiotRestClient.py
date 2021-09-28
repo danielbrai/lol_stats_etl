@@ -46,3 +46,7 @@ class RiotRestClient(RiotRestClientConstraint):
         response = requests.get(url=maps_data_endpoint, headers=self.headers)
         return response
 
+    def get_queue_data(self):
+        queue_data_endpoint = self.prop_reader.get_property_key("API RIOT", "queue_data_endpoint")
+        response = requests.get(url=queue_data_endpoint, headers=self.headers)
+        return response
