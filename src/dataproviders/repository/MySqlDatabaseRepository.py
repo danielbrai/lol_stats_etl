@@ -6,6 +6,7 @@ from src.core.usecase.game_modes.GameModeModel import GameModeModel
 from src.core.usecase.game_types.GameTypeModel import GameTypeModel
 from src.core.usecase.items.ItemModel import ItemModel
 from src.core.usecase.maps.MapModel import MapModel
+from src.core.usecase.platforms.PlatformModel import PlatformModel
 from src.core.usecase.queues.QueueModel import QueueModel
 from src.core.usecase.TeamModel import TeamModel
 from src.dataproviders.repository.MySqlCursor import MySqlCursor
@@ -55,3 +56,8 @@ class MySqlDatabaseRepository(DatabaseRepositoryConstraint):
     def save_game_types_in_database(self, game_types_data: List[GameTypeModel]):
         insert_clause = 'INSERT INTO lol_pro_players_stats.game_types (type, description) VALUES (%(type)s, %(description)s)'
         self.cursor.bulk_insert(insert_clause=insert_clause, insert_values_list=game_types_data)
+
+    def save_platform_in_database(self, platform_data: List[PlatformModel]):
+        insert_clause = 'INSERT INTO lol_pro_players_stats.platforms (name) VALUES (%(name)s)'
+        self.cursor.bulk_insert(insert_clause=insert_clause, insert_values_list=platform_data)
+

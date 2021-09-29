@@ -5,6 +5,9 @@ from src.core.usecase.game_types.RetrieveGameTypesInfoUsecase import RetrieveGam
 from src.core.usecase.game_types.SaveGameTypesDataInDatabaseUsecase import SaveGameTypesDataInDatabaseUsecase
 from src.core.usecase.items.ProcessItemsDataUsecase import ProcessItemsDataUsecase
 from src.core.usecase.maps.ProcessMapsDataUsecase import ProcessMapsDataUsecase
+from src.core.usecase.platforms.ProcessPlatformDataUsecase import ProcessPlatformDataUsecase
+from src.core.usecase.platforms.RetrievePlatformInfoUsecase import RetrievePlatformInfoUsecase
+from src.core.usecase.platforms.SavePlatformDataInDatabaseUsecase import SavePlatformDataInDatabaseUsecase
 from src.core.usecase.queues.ProcessQueueDataUsecase import ProcessQueueDataUsecase
 from src.core.usecase.champions.RetrieveChampionsDataUsecase import RetrieveChampionsDataUsecase
 from src.core.usecase.game_modes.RetrieveGameModesInfoUsecase import RetrieveGameModesInfoUsecase
@@ -16,6 +19,7 @@ from src.core.usecase.game_modes.SaveGameModesDataInDatabaseUsecase import SaveG
 from src.core.usecase.items.SaveItemsDataInDatabaseUsecase import SaveItemsDataInDatabaseUsecase
 from src.core.usecase.maps.SaveMapsDataInDatabaseUsecase import SaveMapsDataInDatabaseUsecase
 from src.core.usecase.queues.SaveQueueDataInDatabaseUsecase import SaveQueueDataInDatabaseUsecase
+from src.dataproviders.filesystem.FileSystemConsumer import FileSystemConsumer
 from src.dataproviders.http_client.RiotRestClient import RiotRestClient
 from src.dataproviders.repository.MySqlCursor import MySqlCursor
 from src.dataproviders.repository.MySqlDatabaseRepository import MySqlDatabaseRepository
@@ -32,6 +36,7 @@ bool_take_maps_data = property_reader.get_boolean_property("CONSUMER CONFIG", "m
 bool_take_queue_data = property_reader.get_boolean_property("CONSUMER CONFIG", "queue")
 bool_take_game_modes_data = property_reader.get_boolean_property("CONSUMER CONFIG", "game_modes")
 bool_take_game_types_data = property_reader.get_boolean_property("CONSUMER CONFIG", "game_types")
+bool_take_platform_data = property_reader.get_boolean_property("CONSUMER CONFIG", "platforms")
 
 ###-------------------------------------------------------------------------------------
 # Boundaries setup
@@ -39,6 +44,7 @@ bool_take_game_types_data = property_reader.get_boolean_property("CONSUMER CONFI
 dataprovider = RiotRestClient(property_reader)
 sql_cursor = MySqlCursor()
 repository = MySqlDatabaseRepository(cursor=sql_cursor)
+file_consumer = FileSystemConsumer()
 
 ###-------------------------------------------------------------------------------------
 # Get champions data from Riot API
@@ -93,3 +99,12 @@ if bool_take_game_types_data:
     save_game_types_data_usecase = SaveGameTypesDataInDatabaseUsecase(repository)
     process_games_types_usecase = ProcessGameTypesDataUsecase(retrieve_game_types_data_usecase, save_game_types_data_usecase)
     process_games_types_usecase.execute()
+
+###-------------------------------------------------------------------------------------
+# Get platform data from file system (resource dir)
+###-------------------------------------------------------------------------------------
+if bool_take_platform_data:
+    retrieve_platform_data_usecase = RetrievePlatformInfoUsecase(file_consumer=file_consumer)
+    save_platform_data_in_database_usecase = SavePlatformDataInDatabaseUsecase(repository=repository)
+    process_platform_data_usecase = ProcessPlatformDataUsecase(retrieve_platform_data_usecase, save_platform_data_in_database_usecase)
+    process_platform_data_usecase.execute()

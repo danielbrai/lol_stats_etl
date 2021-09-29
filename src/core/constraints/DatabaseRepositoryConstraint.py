@@ -1,13 +1,14 @@
 import abc
 from typing import List
 
+from src.core.usecase.TeamModel import TeamModel
 from src.core.usecase.champions.ChampionModel import ChampionModel
 from src.core.usecase.game_modes.GameModeModel import GameModeModel
 from src.core.usecase.game_types.GameTypeModel import GameTypeModel
 from src.core.usecase.items.ItemModel import ItemModel
 from src.core.usecase.maps.MapModel import MapModel
+from src.core.usecase.platforms.PlatformModel import PlatformModel
 from src.core.usecase.queues.QueueModel import QueueModel
-from src.core.usecase.TeamModel import TeamModel
 
 
 class DatabaseRepositoryConstraint(metaclass=abc.ABCMeta):
@@ -50,6 +51,10 @@ class DatabaseRepositoryConstraint(metaclass=abc.ABCMeta):
 
     @abc.abstractmethod
     def save_game_types_in_database(self, game_types: List[GameTypeModel]):
+        pass
+
+    @abc.abstractmethod
+    def save_platform_in_database(self, platform_data: List[PlatformModel]):
         pass
 
 
