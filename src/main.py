@@ -1,5 +1,8 @@
 from src.core.usecase.champions.ProcessChampionsDataUsecase import ProcessChampionsDataUsecase
 from src.core.usecase.game_modes.ProcessGameModesDataUsecase import ProcessGameModesDataUsecase
+from src.core.usecase.game_types.ProcessGameTypesDataUsecase import ProcessGameTypesDataUsecase
+from src.core.usecase.game_types.RetrieveGameTypesInfoUsecase import RetrieveGameTypesInfoUsecase
+from src.core.usecase.game_types.SaveGameTypesDataInDatabaseUsecase import SaveGameTypesDataInDatabaseUsecase
 from src.core.usecase.items.ProcessItemsDataUsecase import ProcessItemsDataUsecase
 from src.core.usecase.maps.ProcessMapsDataUsecase import ProcessMapsDataUsecase
 from src.core.usecase.queues.ProcessQueueDataUsecase import ProcessQueueDataUsecase
@@ -28,6 +31,7 @@ bool_take_items_data = property_reader.get_boolean_property("CONSUMER CONFIG", "
 bool_take_maps_data = property_reader.get_boolean_property("CONSUMER CONFIG", "maps")
 bool_take_queue_data = property_reader.get_boolean_property("CONSUMER CONFIG", "queue")
 bool_take_game_modes_data = property_reader.get_boolean_property("CONSUMER CONFIG", "game_modes")
+bool_take_game_types_data = property_reader.get_boolean_property("CONSUMER CONFIG", "game_types")
 
 ###-------------------------------------------------------------------------------------
 # Boundaries setup
@@ -78,5 +82,14 @@ if bool_take_queue_data:
 if bool_take_game_modes_data:
     retrieve_game_modes_data_usecase = RetrieveGameModesInfoUsecase(dataprovider, repository)
     save_game_modes_data_usecase = SaveGameModesDataInDatabaseUsecase(repository)
-    process_maps_usecase = ProcessGameModesDataUsecase(retrieve_game_modes_data_usecase, save_game_modes_data_usecase)
-    process_maps_usecase.execute()
+    process_game_modes_usecase = ProcessGameModesDataUsecase(retrieve_game_modes_data_usecase, save_game_modes_data_usecase)
+    process_game_modes_usecase.execute()
+
+###-------------------------------------------------------------------------------------
+# Get game types data from Riot API
+###-------------------------------------------------------------------------------------
+if bool_take_game_types_data:
+    retrieve_game_types_data_usecase = RetrieveGameTypesInfoUsecase(dataprovider, repository)
+    save_game_types_data_usecase = SaveGameTypesDataInDatabaseUsecase(repository)
+    process_games_types_usecase = ProcessGameTypesDataUsecase(retrieve_game_types_data_usecase, save_game_types_data_usecase)
+    process_games_types_usecase.execute()

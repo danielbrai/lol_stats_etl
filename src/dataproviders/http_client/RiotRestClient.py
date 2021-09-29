@@ -55,4 +55,10 @@ class RiotRestClient(RiotRestClientConstraint):
         response = requests.get(url=game_modes_data_endpoint, headers=self.headers)
         return response
 
+    def get_game_types_data(self):
+        game_types_endpoint = self.prop_reader.get_property_key("API RIOT", "game_types_endpoint")
+        response = requests.get(url=game_types_endpoint, headers=self.headers)
+        return response
+
+
 

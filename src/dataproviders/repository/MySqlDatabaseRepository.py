@@ -3,6 +3,7 @@ from typing import List
 from src.core.constraints.DatabaseRepositoryConstraint import DatabaseRepositoryConstraint
 from src.core.usecase.champions.ChampionModel import ChampionModel
 from src.core.usecase.game_modes.GameModeModel import GameModeModel
+from src.core.usecase.game_types.GameTypeModel import GameTypeModel
 from src.core.usecase.items.ItemModel import ItemModel
 from src.core.usecase.maps.MapModel import MapModel
 from src.core.usecase.queues.QueueModel import QueueModel
@@ -50,3 +51,7 @@ class MySqlDatabaseRepository(DatabaseRepositoryConstraint):
     def save_game_modes_in_database(self, game_modes_data: List[GameModeModel]):
         insert_clause = 'INSERT INTO lol_pro_players_stats.game_modes (mode, description) VALUES (%(mode)s, %(description)s)'
         self.cursor.bulk_insert(insert_clause=insert_clause, insert_values_list=game_modes_data)
+
+    def save_game_types_in_database(self, game_types_data: List[GameTypeModel]):
+        insert_clause = 'INSERT INTO lol_pro_players_stats.game_types (type, description) VALUES (%(type)s, %(description)s)'
+        self.cursor.bulk_insert(insert_clause=insert_clause, insert_values_list=game_types_data)

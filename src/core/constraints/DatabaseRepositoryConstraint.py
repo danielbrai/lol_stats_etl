@@ -3,6 +3,7 @@ from typing import List
 
 from src.core.usecase.champions.ChampionModel import ChampionModel
 from src.core.usecase.game_modes.GameModeModel import GameModeModel
+from src.core.usecase.game_types.GameTypeModel import GameTypeModel
 from src.core.usecase.items.ItemModel import ItemModel
 from src.core.usecase.maps.MapModel import MapModel
 from src.core.usecase.queues.QueueModel import QueueModel
@@ -13,15 +14,15 @@ class DatabaseRepositoryConstraint(metaclass=abc.ABCMeta):
 
     @abc.abstractmethod
     def save_teams(self, teams: List[TeamModel]):
-        return
+        pass
 
     @abc.abstractmethod
     def save_player(self, player: str, team_id: int, season: int, split: int):
-        return
+        pass
 
     @abc.abstractmethod
     def get_team_id(self, team_name: str):
-        return
+        pass
 
     @abc.abstractmethod
     def save_champions_in_database(self, champions_data: List[ChampionModel]):
@@ -45,6 +46,10 @@ class DatabaseRepositoryConstraint(metaclass=abc.ABCMeta):
 
     @abc.abstractmethod
     def save_game_modes_in_database(self, game_modes_data: List[GameModeModel]):
+        pass
+
+    @abc.abstractmethod
+    def save_game_types_in_database(self, game_types: List[GameTypeModel]):
         pass
 
 
