@@ -10,5 +10,5 @@ class SaveTeamsInfoInDatabaseUsecase:
     def execute(self, league_info: LeagueModel):
         teams = []
         for team in league_info.teams:
-            teams.append(team.name)
+            teams.append(team.summoner_name)
         self.repository.save_teams(teams)

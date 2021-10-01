@@ -4,6 +4,14 @@ from src.core.usecase.game_types.ProcessGameTypesDataUsecase import ProcessGameT
 from src.core.usecase.game_types.RetrieveGameTypesInfoUsecase import RetrieveGameTypesInfoUsecase
 from src.core.usecase.game_types.SaveGameTypesDataInDatabaseUsecase import SaveGameTypesDataInDatabaseUsecase
 from src.core.usecase.items.ProcessItemsDataUsecase import ProcessItemsDataUsecase
+from src.core.usecase.line_up.ProcessLineUpDataUseCase import ProcessLineUpDataUseCase
+from src.core.usecase.line_up.RetrieveChampionshipInfoUseCase import RetrieveChampionshipInfoUseCase
+from src.core.usecase.line_up.lineup.SavePlayerTeamInfoInDatabaseUseCase import SavePlayerTeamInfoInDatabaseUseCase
+from src.core.usecase.line_up.matches.RetrieveMatchDetailsUsecase import RetrieveMatchDetailsUsecase
+from src.core.usecase.line_up.player.RetrievePlayerInfoUseCase import RetrievePlayerInfoUseCase
+from src.core.usecase.line_up.player.SavePlayerDataInDatabaseUseCase import SavePlayerDataInDatabaseUseCase
+from src.core.usecase.line_up.teams.GetTeamByNameUseCase import GetTeamByNameUseCase
+from src.core.usecase.line_up.teams.SaveTeamDataInDatabaseUseCase import SaveTeamDataInDatabaseUseCase
 from src.core.usecase.maps.ProcessMapsDataUsecase import ProcessMapsDataUsecase
 from src.core.usecase.platforms.ProcessPlatformDataUsecase import ProcessPlatformDataUsecase
 from src.core.usecase.platforms.RetrievePlatformInfoUsecase import RetrievePlatformInfoUsecase
@@ -37,6 +45,7 @@ bool_take_queue_data = property_reader.get_boolean_property("CONSUMER CONFIG", "
 bool_take_game_modes_data = property_reader.get_boolean_property("CONSUMER CONFIG", "game_modes")
 bool_take_game_types_data = property_reader.get_boolean_property("CONSUMER CONFIG", "game_types")
 bool_take_platform_data = property_reader.get_boolean_property("CONSUMER CONFIG", "platforms")
+bool_take_championship_data = property_reader.get_boolean_property("CONSUMER CONFIG", "championship")
 
 ###-------------------------------------------------------------------------------------
 # Boundaries setup
@@ -52,7 +61,8 @@ file_consumer = FileSystemConsumer()
 if bool_take_champion_data:
     retrieve_champions_data_usecase = RetrieveChampionsDataUsecase(dataprovider)
     save_champions_data_in_database_usecase = SaveChampionsDataInDatabaseUsecase(repository)
-    process_champions_usecase = ProcessChampionsDataUsecase(retrieve_champions_data_usecase, save_champions_data_in_database_usecase)
+    process_champions_usecase = ProcessChampionsDataUsecase(retrieve_champions_data_usecase,
+                                                            save_champions_data_in_database_usecase)
     process_champions_usecase.execute()
 
 ###-------------------------------------------------------------------------------------
@@ -88,7 +98,8 @@ if bool_take_queue_data:
 if bool_take_game_modes_data:
     retrieve_game_modes_data_usecase = RetrieveGameModesInfoUsecase(dataprovider, repository)
     save_game_modes_data_usecase = SaveGameModesDataInDatabaseUsecase(repository)
-    process_game_modes_usecase = ProcessGameModesDataUsecase(retrieve_game_modes_data_usecase, save_game_modes_data_usecase)
+    process_game_modes_usecase = ProcessGameModesDataUsecase(retrieve_game_modes_data_usecase,
+                                                             save_game_modes_data_usecase)
     process_game_modes_usecase.execute()
 
 ###-------------------------------------------------------------------------------------
@@ -97,7 +108,8 @@ if bool_take_game_modes_data:
 if bool_take_game_types_data:
     retrieve_game_types_data_usecase = RetrieveGameTypesInfoUsecase(dataprovider, repository)
     save_game_types_data_usecase = SaveGameTypesDataInDatabaseUsecase(repository)
-    process_games_types_usecase = ProcessGameTypesDataUsecase(retrieve_game_types_data_usecase, save_game_types_data_usecase)
+    process_games_types_usecase = ProcessGameTypesDataUsecase(retrieve_game_types_data_usecase,
+                                                              save_game_types_data_usecase)
     process_games_types_usecase.execute()
 
 ###-------------------------------------------------------------------------------------
@@ -106,5 +118,22 @@ if bool_take_game_types_data:
 if bool_take_platform_data:
     retrieve_platform_data_usecase = RetrievePlatformInfoUsecase(file_consumer=file_consumer)
     save_platform_data_in_database_usecase = SavePlatformDataInDatabaseUsecase(repository=repository)
-    process_platform_data_usecase = ProcessPlatformDataUsecase(retrieve_platform_data_usecase, save_platform_data_in_database_usecase)
+    process_platform_data_usecase = ProcessPlatformDataUsecase(retrieve_platform_data_usecase,
+                                                               save_platform_data_in_database_usecase)
     process_platform_data_usecase.execute()
+
+###-------------------------------------------------------------------------------------
+# Process team info from file system (resource dir)
+###-------------------------------------------------------------------------------------
+if bool_take_championship_data:
+    retrieve_championship_data_use_case = RetrieveChampionshipInfoUseCase(file_consumer)
+    retrieve_player_info_use_case = RetrievePlayerInfoUseCase(dataprovider)
+    save_team_in_database_use_case = SaveTeamDataInDatabaseUseCase(repository)
+    get_team_by_name_use_case = GetTeamByNameUseCase(repository)
+    save_player_use_case = SavePlayerDataInDatabaseUseCase(repository, retrieve_player_info_use_case)
+    save_player_team_info_in_database_use_case = SavePlayerTeamInfoInDatabaseUseCase(repository)
+    process_lineup_data = ProcessLineUpDataUseCase(retrieve_championship_data_use_case,
+                                                   save_team_in_database_use_case, get_team_by_name_use_case,
+                                                   save_player_use_case, save_player_team_info_in_database_use_case)
+    a = process_lineup_data.execute()
+

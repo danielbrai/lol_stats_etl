@@ -17,9 +17,21 @@ class MySqlCursor:
         cursor = self.mydb.cursor()
         cursor.executemany(insert_clause, values_to_insert)
         self.mydb.commit()
+        saved_id = cursor.lastrowid
         cursor.close()
+
+    def single_insert(self, insert_clause: str, insert_value):
+        values_to_insert = insert_value.__dict__
+        cursor = self.mydb.cursor()
+        cursor.execute(insert_clause, values_to_insert)
+        self.mydb.commit()
+        saved_id = cursor.lastrowid
+        cursor.close()
+        return saved_id
 
     def get_record(self, select_clause: str, query_params: ()):
         cursor = self.mydb.cursor()
         cursor.execute(select_clause, query_params)
-        return cursor.fetchone()
+        result = cursor.fetchone()
+        cursor.close()
+        return result

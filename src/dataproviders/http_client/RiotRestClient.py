@@ -9,12 +9,17 @@ class RiotRestClient(RiotRestClientConstraint):
         auth_token = self.prop_reader.get_property_key("API RIOT", "auth_token")
         self.headers = {'X-Riot-Token': auth_token}
 
-    def get_user_data(self, username):
+    def get_user_puuid(self, username):
         url_summoner = self.prop_reader.get_property_key("API RIOT", "summoner_endpoint")
         br1_base_url = self.prop_reader.get_property_key("API RIOT", "br1_base_url")
         url = f'{br1_base_url}{url_summoner}/{username}'
         response = requests.get(url=url, headers=self.headers)
-        return response
+        a = response.json()
+
+        if response.status_code == 404:
+            return None
+        else:
+            return a['puuid']
 
     def get_last_played_matches(self, puuid, number_of_matches):
         matches_id_endpoint = self.prop_reader.get_property_key("API RIOT", "matches_id_endpoint")

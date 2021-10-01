@@ -1,5 +1,3 @@
-from src.core.usecase.TeamModel import TeamModel
-from src.core.usecase.LeagueModel import LeagueModel
 from src.core.usecase.platforms.PlatformModel import PlatformModel
 
 

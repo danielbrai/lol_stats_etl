@@ -1,11 +1,12 @@
 import abc
 from typing import List
 
-from src.core.usecase.TeamModel import TeamModel
 from src.core.usecase.champions.ChampionModel import ChampionModel
 from src.core.usecase.game_modes.GameModeModel import GameModeModel
 from src.core.usecase.game_types.GameTypeModel import GameTypeModel
 from src.core.usecase.items.ItemModel import ItemModel
+from src.core.usecase.line_up.lineup.PlayerTeamModel import PlayerTeamModel
+from src.core.usecase.line_up.player.PlayerModel import PlayerModel
 from src.core.usecase.maps.MapModel import MapModel
 from src.core.usecase.platforms.PlatformModel import PlatformModel
 from src.core.usecase.queues.QueueModel import QueueModel
@@ -14,11 +15,7 @@ from src.core.usecase.queues.QueueModel import QueueModel
 class DatabaseRepositoryConstraint(metaclass=abc.ABCMeta):
 
     @abc.abstractmethod
-    def save_teams(self, teams: List[TeamModel]):
-        pass
-
-    @abc.abstractmethod
-    def save_player(self, player: str, team_id: int, season: int, split: int):
+    def save_player(self, player: PlayerModel):
         pass
 
     @abc.abstractmethod
@@ -55,6 +52,18 @@ class DatabaseRepositoryConstraint(metaclass=abc.ABCMeta):
 
     @abc.abstractmethod
     def save_platform_in_database(self, platform_data: List[PlatformModel]):
+        pass
+
+    @abc.abstractmethod
+    def save_team_info_in_database(self, team):
+        pass
+
+    @abc.abstractmethod
+    def get_team_by_name(self, team):
+        pass
+
+    @abc.abstractmethod
+    def save_team_player_info_in_database(self, player_team: PlayerTeamModel):
         pass
 
 
