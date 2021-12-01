@@ -34,6 +34,3 @@ class RiotRestClientConstraint(metaclass=abc.ABCMeta):
     @abc.abstractmethod
     def get_game_types_data(self):
         pass
-
-    def get_matches_from_player(self, quantity_of_matches: int):
-        pass

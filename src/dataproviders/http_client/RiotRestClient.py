@@ -1,9 +1,11 @@
 import requests
-from src.utils.PropertyReader import PropertyReader
+
 from src.core.constraints.RiotRestClientConstraint import RiotRestClientConstraint
+from src.utils.PropertyReader import PropertyReader
 
 
 class RiotRestClient(RiotRestClientConstraint):
+
     def __init__(self, property_reader: PropertyReader):
         self.prop_reader = property_reader
         auth_token = self.prop_reader.get_property_key("API RIOT", "auth_token")
@@ -64,6 +66,4 @@ class RiotRestClient(RiotRestClientConstraint):
         game_types_endpoint = self.prop_reader.get_property_key("API RIOT", "game_types_endpoint")
         response = requests.get(url=game_types_endpoint, headers=self.headers)
         return response
-
-
 

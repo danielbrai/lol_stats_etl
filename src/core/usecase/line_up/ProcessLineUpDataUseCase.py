@@ -1,7 +1,6 @@
 from src.core.usecase.line_up.RetrieveChampionshipInfoUseCase import RetrieveChampionshipInfoUseCase
 from src.core.usecase.line_up.lineup.PlayerTeamModel import PlayerTeamModel
 from src.core.usecase.line_up.lineup.SavePlayerTeamInfoInDatabaseUseCase import SavePlayerTeamInfoInDatabaseUseCase
-from src.core.usecase.line_up.player.RetrievePlayerInfoUseCase import RetrievePlayerInfoUseCase
 from src.core.usecase.line_up.player.SavePlayerDataInDatabaseUseCase import SavePlayerDataInDatabaseUseCase
 from src.core.usecase.line_up.teams.GetTeamByNameUseCase import GetTeamByNameUseCase
 from src.core.usecase.line_up.teams.SaveTeamDataInDatabaseUseCase import SaveTeamDataInDatabaseUseCase

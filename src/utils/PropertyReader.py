@@ -15,3 +15,6 @@ class PropertyReader:
 
     def get_boolean_property(self, section, property_name):
         return self.parser.getboolean(section, property_name)
+
+    def get_int_property(self, section, property_name):
+        return self.parser.getint(section, property_name)

@@ -1,5 +1,3 @@
-from typing import List
-
 import mysql.connector
 
 
@@ -33,5 +31,12 @@ class MySqlCursor:
         cursor = self.mydb.cursor()
         cursor.execute(select_clause, query_params)
         result = cursor.fetchone()
+        cursor.close()
+        return result
+
+    def get_list(self, select_clause):
+        cursor = self.mydb.cursor()
+        cursor.execute(select_clause)
+        result = cursor.fetchall()
         cursor.close()
         return result

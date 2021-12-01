@@ -1,11 +1,11 @@
 from src.core.constraints.RiotRestClientConstraint import RiotRestClientConstraint
 
 
-class RetrieveMatchDetailsUsecase:
+class RetrieveMatchIdsFromUserPuuidUseCase:
 
     def __init__(self, dataprovider: RiotRestClientConstraint):
         self.dataprovider = dataprovider
 
-    def execute(self, match_id):
-        response = self.dataprovider.get_match_details(match_id)
+    def execute(self, puuid: str, desired_number_of_matches: int):
+        response = self.dataprovider.get_last_played_matches(puuid, desired_number_of_matches)
         return response.json()

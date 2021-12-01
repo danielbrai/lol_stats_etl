@@ -4,7 +4,7 @@ from src.core.constraints.DatabaseRepositoryConstraint import DatabaseRepository
 from src.core.usecase.game_modes.GameModeModel import GameModeModel
 
 
-class SaveGameModesDataInDatabaseUsecase:
+class SaveGameModesDataInDatabaseUseCase:
 
     def __init__(self, repository: DatabaseRepositoryConstraint):
         self.repository = repository

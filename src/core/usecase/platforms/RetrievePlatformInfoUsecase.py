@@ -1,8 +1,4 @@
-from src.core.constraints.DatabaseRepositoryConstraint import DatabaseRepositoryConstraint
 from src.core.constraints.FileConsumerConstraint import FileConsumerConstraint
-from src.core.constraints.RiotRestClientConstraint import RiotRestClientConstraint
-from src.core.usecase.maps.MapModel import MapModel
-from src.core.usecase.queues.QueueModel import QueueModel
 
 
 class RetrievePlatformInfoUsecase:

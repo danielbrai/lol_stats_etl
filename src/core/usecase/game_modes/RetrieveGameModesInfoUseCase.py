@@ -3,7 +3,7 @@ from src.core.constraints.RiotRestClientConstraint import RiotRestClientConstrai
 from src.core.usecase.game_modes.GameModeModel import GameModeModel
 
 
-class RetrieveGameModesInfoUsecase:
+class RetrieveGameModesInfoUseCase:
 
     def __init__(self, dataprovider: RiotRestClientConstraint, repository: DatabaseRepositoryConstraint):
         self.dataprovider = dataprovider

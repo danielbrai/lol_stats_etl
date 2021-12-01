@@ -1,5 +1,3 @@
-from typing import List
-
 from src.core.constraints.DatabaseRepositoryConstraint import DatabaseRepositoryConstraint
 from src.core.usecase.line_up.player.PlayerModel import PlayerModel
 from src.core.usecase.line_up.player.RetrievePlayerInfoUseCase import RetrievePlayerInfoUseCase

@@ -1,4 +1,5 @@
 from src.core.usecase.TeamModel import TeamModel
+
 from src.core.usecase.LeagueModel import LeagueModel
 
 

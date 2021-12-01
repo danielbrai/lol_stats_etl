@@ -1,6 +1,6 @@
 from typing import List
 
-from src.core.usecase.TeamModel import TeamModel
+from src.core.usecase.line_up.teams.TeamModel import TeamModel
 
 
 class LeagueModel:
