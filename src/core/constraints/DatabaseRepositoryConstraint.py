@@ -7,12 +7,13 @@ from src.core.usecase.game_modes.GameModeModel import GameModeModel
 from src.core.usecase.game_types.GameTypeModel import GameTypeModel
 from src.core.usecase.items.ItemModel import ItemModel
 from src.core.usecase.line_up.lineup.PlayerTeamModel import PlayerTeamModel
-from src.core.usecase.line_up.matches.MatchPlayerDetailsModel import MatchPlayerDetailsModel
+from src.core.usecase.match_participants.MatchPlayerDetailsModel import MatchPlayerDetailsModel
 from src.core.usecase.line_up.player.PlayerModel import PlayerModel
 from src.core.usecase.maps.MapModel import MapModel
 from src.core.usecase.matches_info.MatchInfoModel import MatchInfoModel
 from src.core.usecase.objectives_type.ObjectiveTypeModel import ObjectiveTypeModel
 from src.core.usecase.platforms.PlatformModel import PlatformModel
+from src.core.usecase.positions.PositionModel import PositionModel
 from src.core.usecase.queues.QueueModel import QueueModel
 
 
@@ -27,7 +28,7 @@ class DatabaseRepositoryConstraint(metaclass=abc.ABCMeta):
         pass
 
     @abc.abstractmethod
-    def save_champions_in_database(self, champions_data: List[ChampionModel]):
+    def save_champions_in_database(self, champions_data: ChampionModel):
         pass
 
     @abc.abstractmethod
@@ -83,7 +84,7 @@ class DatabaseRepositoryConstraint(metaclass=abc.ABCMeta):
         pass
 
     @abc.abstractmethod
-    def save_position_in_database(self, position_name: str):
+    def save_position_in_database(self, position: PositionModel):
         pass
 
     @abc.abstractmethod
@@ -140,4 +141,20 @@ class DatabaseRepositoryConstraint(metaclass=abc.ABCMeta):
 
     @abc.abstractmethod
     def get_ban_info_by_champion_id_and_match_info_team_id(self, champion_id: int, match_info_team_id: int):
+        pass
+
+    @abc.abstractmethod
+    def get_player_by_summoner_name(self, summoner_name: str):
+        pass
+
+    @abc.abstractmethod
+    def get_objective_by_objective_type_id_and_match_info_team_id(self, objective_type, match_info_team_id):
+        pass
+
+    @abc.abstractmethod
+    def get_match_participant_by_relations_ids(self, champion_id: int, team_position_id: int, individual_position_id: int, role_id: int, match_info_team_id:int, player_id: int):
+        pass
+
+    @abc.abstractmethod
+    def get_champion_by_riot_id(self, riot_id: str):
         pass

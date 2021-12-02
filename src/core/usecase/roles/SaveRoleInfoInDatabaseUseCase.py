@@ -16,8 +16,7 @@ class SaveRoleInfoInDatabaseUseCase:
         saved_position = self.get_role_info_from_database_use_case.execute(role)
 
         if saved_position:
-            return saved_position
+            return saved_position.id
         else:
             position = RoleModel(id=None, role=role)
-            a = self.repository.save_role_in_database(position)
-            return a
+            return self.repository.save_role_in_database(position)

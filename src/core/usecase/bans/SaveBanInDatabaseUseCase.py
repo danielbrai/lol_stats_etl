@@ -13,7 +13,7 @@ class SaveBanInDatabaseUseCase:
 
     def execute(self, ban: BanModel):
         ban_info_saved = self.get_ban_info_by_champion_id_and_match_info_team_id_from_database_use_case.execute(
-            ban.champion_id, ban.match_info_team_id)
+            champion_id=ban.champion_id, match_info_team_id=ban.match_info_team_id)
 
         if ban_info_saved:
             return ban_info_saved.id

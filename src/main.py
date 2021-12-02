@@ -2,6 +2,7 @@ from src.core.usecase.bans.BanModel import BanModel
 from src.core.usecase.bans.GetBanInfoByChampionIdAndMatchInfoTeamIdFromDatabaseUseCase import \
     GetBanInfoByChampionIdAndMatchInfoTeamIdFromDatabaseUseCase
 from src.core.usecase.bans.SaveBanInDatabaseUseCase import SaveBanInDatabaseUseCase
+from src.core.usecase.champions.GetChampionByRiotIdUseCase import GetChampionByRiotIdUseCase
 from src.core.usecase.champions.ProcessChampionsDataUsecase import ProcessChampionsDataUsecase
 from src.core.usecase.champions.RetrieveChampionsDataUsecase import RetrieveChampionsDataUsecase
 from src.core.usecase.champions.SaveChampionsDataInDatabaseUsecase import SaveChampionsDataInDatabaseUsecase
@@ -19,8 +20,7 @@ from src.core.usecase.items.SaveItemsDataInDatabaseUsecase import SaveItemsDataI
 from src.core.usecase.line_up.ProcessLineUpDataUseCase import ProcessLineUpDataUseCase
 from src.core.usecase.line_up.RetrieveChampionshipInfoUseCase import RetrieveChampionshipInfoUseCase
 from src.core.usecase.line_up.lineup.SavePlayerTeamInfoInDatabaseUseCase import SavePlayerTeamInfoInDatabaseUseCase
-from src.core.usecase.line_up.matches.RetrieveMatchDetailsUsecase import RetrieveMatchDetailsUsecase
-from src.core.usecase.line_up.matches.RetrieveMatchIdsFromUserPuuidUseCase import RetrieveMatchIdsFromUserPuuidUseCase
+from src.core.usecase.line_up.player.GetPlayerBySummonerNameUseCase import GetPlayerBySummonerNameUseCase
 from src.core.usecase.line_up.player.GetPlayersPuuidFromDatabaseUseCase import GetPlayersPuuidFromDatabaseUseCase
 from src.core.usecase.line_up.player.RetrievePlayerInfoUseCase import RetrievePlayerInfoUseCase
 from src.core.usecase.line_up.player.SavePlayerDataInDatabaseUseCase import SavePlayerDataInDatabaseUseCase
@@ -29,12 +29,20 @@ from src.core.usecase.line_up.teams.SaveTeamDataInDatabaseUseCase import SaveTea
 from src.core.usecase.maps.ProcessMapsDataUsecase import ProcessMapsDataUsecase
 from src.core.usecase.maps.RetrieveMapsInfoUsecase import RetrieveMapsInfoUsecase
 from src.core.usecase.maps.SaveMapsDataInDatabaseUsecase import SaveMapsDataInDatabaseUsecase
+from src.core.usecase.match_participants.GetMatchParticipantInfoFromDatabaseUseCase import GetMatchParticipantInfoFromDatabaseUseCase
+from src.core.usecase.match_participants.MatchPlayerDetailsModel import MatchPlayerDetailsModel
+from src.core.usecase.match_participants.RetrieveMatchDetailsUsecase import RetrieveMatchDetailsUsecase
+from src.core.usecase.match_participants.RetrieveMatchIdsFromUserPuuidUseCase import \
+    RetrieveMatchIdsFromUserPuuidUseCase
+from src.core.usecase.match_participants.SaveMatchPlayerDetailsUseCase import SaveMatchPlayerDetailsUseCase
 from src.core.usecase.match_team_info.GetMatchInfoTeamInfoByMatchInfoIdAndTeamIdFromDatabaseUseCase import \
     GetMatchInfoTeamInfoByMatchInfoIdAndTeamIdFromDatabaseUseCase
 from src.core.usecase.match_team_info.MatchTeamInfoModel import MatchTeamInfoModel
 from src.core.usecase.match_team_info.SaveMatchTeamInfoInDatabaseUseCase import SaveMatchTeamInfoInDatabaseUseCase
 from src.core.usecase.matches_info.MatchInfoModel import MatchInfoModel
 from src.core.usecase.matches_info.SaveMatchesInfoInDatabaseUseCase import SaveMatchesInfoInDatabaseUseCase
+from src.core.usecase.objectives.GetObjectivesInfoByObjectiveTypeIdAndMatchInfoTeamIdFromDatabaseUseCase import \
+    GetObjectivesInfoByObjectiveTypeIdAndMatchInfoTeamIdFromDatabaseUseCase
 from src.core.usecase.objectives.ObjectiveModel import ObjectiveModel
 from src.core.usecase.objectives.SaveObjectiveInfoInDatabaseUseCase import SaveObjectiveInfoInDatabaseUseCase
 from src.core.usecase.objectives_type.GetObjectiveTypeInfoFromDatabaseUseCase import \
@@ -87,7 +95,8 @@ file_consumer = FileSystemConsumer()
 ###-------------------------------------------------------------------------------------
 if bool_take_champion_data:
     retrieve_champions_data_usecase = RetrieveChampionsDataUsecase(dataprovider)
-    save_champions_data_in_database_usecase = SaveChampionsDataInDatabaseUsecase(repository)
+    get_champion_by_riot_id_id_use_case = GetChampionByRiotIdUseCase(repository)
+    save_champions_data_in_database_usecase = SaveChampionsDataInDatabaseUsecase(repository, get_champion_by_riot_id_id_use_case)
     process_champions_usecase = ProcessChampionsDataUsecase(retrieve_champions_data_usecase,
                                                             save_champions_data_in_database_usecase)
     process_champions_usecase.execute()
@@ -173,31 +182,25 @@ if bool_matches_data:
     retrieve_matches_id_usecase = RetrieveMatchIdsFromUserPuuidUseCase(dataprovider)
     retrieve_match_details_use_case = RetrieveMatchDetailsUsecase(dataprovider)
     get_position_info_from_database_use_case = GetPositionInfoFromDatabaseUseCase(repository)
-    save_position_info_in_database_use_case = SavePositionInfoInDatabaseUseCase(
-        repository,
-        get_position_info_from_database_use_case
-    )
+    save_position_info_in_database_use_case = SavePositionInfoInDatabaseUseCase(repository, get_position_info_from_database_use_case)
     get_role_info_from_database_use_case = GetRoleInfoFromDatabaseUseCase(repository)
-    save_role_info_in_database_use_case = SaveRoleInfoInDatabaseUseCase(
-        repository,
-        get_role_info_from_database_use_case
-    )
+    save_role_info_in_database_use_case = SaveRoleInfoInDatabaseUseCase(repository, get_role_info_from_database_use_case)
     get_objective_info_from_database_use_case = GetObjectiveTypeInfoFromDatabaseUseCase(repository)
-    save_objective_type_info_in_database_use_case = SaveObjectiveTypeInfoInDatabaseUseCase(
-        repository,
-        get_objective_info_from_database_use_case
-    )
+    save_objective_type_info_in_database_use_case = SaveObjectiveTypeInfoInDatabaseUseCase(repository, get_objective_info_from_database_use_case)
     get_game_mode_by_name_use_case = GetGameModeByNameUseCase(repository)
     get_platform_by_name_use_case = GetPlatformByNameUseCase(repository)
     get_game_type_by_name_use_case = GetGameTypeByNameUseCase(repository)
     save_match_info_in_database_use_case = SaveMatchesInfoInDatabaseUseCase(repository)
-    get_match_team_info_by_match_info_id_and_team_id_from_database_use_case = GetMatchInfoTeamInfoByMatchInfoIdAndTeamIdFromDatabaseUseCase(
-        repository)
-    save_match_team_info_in_database_use_case = SaveMatchTeamInfoInDatabaseUseCase(repository,
-                                                                                   get_match_team_info_by_match_info_id_and_team_id_from_database_use_case)
-    save_objective_info_in_database_use_case = SaveObjectiveInfoInDatabaseUseCase(repository)
+    get_match_team_info_by_match_info_id_and_team_id_from_database_use_case = GetMatchInfoTeamInfoByMatchInfoIdAndTeamIdFromDatabaseUseCase(repository)
+    save_match_team_info_in_database_use_case = SaveMatchTeamInfoInDatabaseUseCase(repository, get_match_team_info_by_match_info_id_and_team_id_from_database_use_case)
+    get_objective_by_objective_type_id_and_match_info_team_id_from_database_use_case = GetObjectivesInfoByObjectiveTypeIdAndMatchInfoTeamIdFromDatabaseUseCase(repository)
+    save_objective_info_in_database_use_case = SaveObjectiveInfoInDatabaseUseCase(repository, get_objective_by_objective_type_id_and_match_info_team_id_from_database_use_case)
     get_ban_info_by_champion_id_and_match_info_team_id_from_database_use_case = GetBanInfoByChampionIdAndMatchInfoTeamIdFromDatabaseUseCase(repository)
-    save_ban_in_database_use_case = SaveBanInDatabaseUseCase(repository, save_objective_info_in_database_use_case)
+    save_ban_in_database_use_case = SaveBanInDatabaseUseCase(repository, get_ban_info_by_champion_id_and_match_info_team_id_from_database_use_case)
+    get_player_by_summoner_name_use_case = GetPlayerBySummonerNameUseCase(repository)
+    get_match_participant_info_from_database_use_case = GetMatchParticipantInfoFromDatabaseUseCase(repository)
+    save_match_player_details_use_case = SaveMatchPlayerDetailsUseCase(repository, get_match_participant_info_from_database_use_case)
+    get_champion_by_riot_id_id_use_case = GetChampionByRiotIdUseCase(repository)
     b = []
 
     for puuid in a:
@@ -218,8 +221,7 @@ if bool_matches_data:
                                         mode_id=mode_id,
                                         type_id=game_type_id,
                                         creation=match_participant['info']['gameCreation'],
-                                        duration=match_participant['info']['gameEndTimestamp'] -
-                                                 match_participant['info']['gameStartTimestamp'],
+                                        duration=match_participant['info']['gameEndTimestamp'] - match_participant['info']['gameStartTimestamp'],
                                         start=match_participant['info']['gameStartTimestamp'],
                                         game_patch=match_participant['info']['gameVersion'],
                                         platform_id=platform_id,
@@ -229,138 +231,122 @@ if bool_matches_data:
 
             for info_participant in match_participant['info']['participants']:
                 for key, value in info_participant.items():
-                    position_saved = save_position_info_in_database_use_case.execute(
+
+                    individual_position_saved = save_position_info_in_database_use_case.execute(
                         position_name=info_participant['individualPosition'])
+
+                    team_position_saved = save_position_info_in_database_use_case.execute(
+                        position_name=info_participant['teamPosition'])
+
                     role_saved = save_role_info_in_database_use_case.execute(role=info_participant['role'])
 
-                    for team_info in match_participant['info']['teams']:
+                    player_saved = get_player_by_summoner_name_use_case.execute(info_participant['summonerName'])
 
-                        # Salvar junto com os jogadores
+                    for team_info in match_participant['info']['teams']:
                         match_team_info = MatchTeamInfoModel(id=None, match_info_id=match_info_saved,
                                                              team_id=team_info['teamId'])
+
                         match_team_info_saved = save_match_team_info_in_database_use_case.execute(match_team_info)
 
                         for ban in team_info['bans']:
-                            ban_to_save = BanModel(id=None, champion_id=ban['championId'],
-                                                   match_info_team_id=match_team_info_saved, pick_turn=ban['pickTurn'])
-                            save_ban_in_database_use_case.execute(ban_to_save)
+                            saved_champion = get_champion_by_riot_id_id_use_case.execute(ban['championId'])
+
+                            if saved_champion:
+                                ban_to_save = BanModel(id=None, champion_id=saved_champion.id, match_info_team_id=match_team_info_saved, pick_turn=ban['pickTurn'])
+                                save_ban_in_database_use_case.execute(ban_to_save)
 
                         for objective_name, objective_data in team_info['objectives'].items():
                             objective_type_saved = save_objective_type_info_in_database_use_case.execute(objective_name)
+
                             first = 1 if objective_data['first'] else 0
+
                             objective = ObjectiveModel(id=None, objective_type_id=objective_type_saved,
                                                        match_info_team_id=match_team_info_saved, first=first,
                                                        kills=objective_data['kills'])
-                            save_objective_info_in_database_use_case.execute(objective)
-                    '''
-                    match_player_details = MatchPlayerDetailsModel(
-                        info_participant['assists'],
-                        info_participant['bountyLevel'],
-                        info_participant['champExperience'],
-                        info_participant['championId'],
-                        info_participant['consumablesPurchased'],
-                        info_participant['damageDealtToObjectives'],
-                        info_participant['damageDealtToTurrets'],
-                        info_participant['damageSelfMitigated'],
-                        info_participant['deaths'],
-                        info_participant['damageDealtToBuildings'],
-                        info_participant['detectorWardsPlaced'],
-                        info_participant['doubleKills'],
-                        info_participant['dragonKills'],
-                        info_participant['firstBloodAssist'],
-                        info_participant['firstBloodKill'],
-                        info_participant['firstTowerKill'],
-                        info_participant['goldEarned'],
-                        info_participant['goldSpent'],
-                        info_participant['individualPosition'],
-                        info_participant['inhibitorKills'],
-                        info_participant['inhibitorsLost'],
-                        info_participant['inhibitorTakedowns'],
-                        info_participant['itemsPurchased'],
-                        info_participant['killingSprees'],
-                        info_participant['kills'],
-                        info_participant['lane'],
-                        info_participant['largestCriticalStrike'],
-                        info_participant['largestKillingSpree'],
-                        info_participant['largestMultiKill'],
-                        info_participant['longestTimeSpentLiving'],
-                        info_participant['magicDamageDealt'],
-                        info_participant['magicDamageDealtToChampions'],
-                        info_participant['magicDamageTaken'],
-                        info_participant['neutralMinionsKilled'],
-                        info_participant['nexusKills'],
-                        info_participant['nexusLost'],
-                        info_participant['nexusTakedowns'],
-                        info_participant['objectivesStolen'],
-                        info_participant['objectivesStolenAssists'],
-                        info_participant['pentaKills'],
-                        info_participant['physicalDamageDealt'],
-                        info_participant['physicalDamageDealtToChampions'],
-                        info_participant['physicalDamageTaken'],
-                        info_participant['teamId'],
-                        info_participant['teamPosition'],
 
-                        info_participant['baronKills'],
-                        info_participant['champLevel'],
-                        info_participant['championName'],
-                        info_participant['championTransform'],
-                        info_participant['consumablesPurchased'],
-                        info_participant['firstTowerAssist'],
-                        info_participant['gameEndedInEarlySurrender'],
-                        info_participant['gameEndedInSurrender'],
-                        info_participant['item0'],
-                        info_participant['item1'],
-                        info_participant['item2'],
-                        info_participant['item3'],
-                        info_participant['item4'],
-                        info_participant['item5'],
-                        info_participant['item6'],
-                        info_participant['participantId'],
-                        info_participant['perks'],
-                        info_participant['profileIcon'],
-                        info_participant['puuid'],
-                        info_participant['quadraKills'],
-                        info_participant['riotIdName'],
-                        info_participant['riotIdTagline'],
-                        info_participant['role'],
-                        info_participant['sightWardsBoughtInGame'],
-                        info_participant['spell1Casts'],
-                        info_participant['spell2Casts'],
-                        info_participant['spell3Casts'],
-                        info_participant['spell4Casts'],
-                        info_participant['summoner1Casts'],
-                        info_participant['summoner1Id'],
-                        info_participant['summoner2Casts'],
-                        info_participant['summoner2Id'],
-                        info_participant['summonerId'],
-                        info_participant['summonerLevel'],
-                        info_participant['summonerName'],
-                        info_participant['teamEarlySurrendered'],
-                        info_participant['timeCCingOthers'],
-                        info_participant['timePlayed'],
-                        info_participant['totalDamageDealt'],
-                        info_participant['totalDamageDealtToChampions'],
-                        info_participant['totalDamageShieldedOnTeammates'],
-                        info_participant['totalDamageTaken'],
-                        info_participant['totalHeal'],
-                        info_participant['totalHealsOnTeammates'],
-                        info_participant['totalMinionsKilled'],
-                        info_participant['totalTimeCCDealt'],
-                        info_participant['totalTimeSpentDead'],
-                        info_participant['totalUnitsHealed'],
-                        info_participant['tripleKills'],
-                        info_participant['trueDamageDealt'],
-                        info_participant['trueDamageDealtToChampions'],
-                        info_participant['trueDamageTaken'],
-                        info_participant['turretKills'],
-                        info_participant['turretTakedowns'],
-                        info_participant['turretsLost'],
-                        info_participant['unrealKills'],
-                        info_participant['visionScore'],
-                        info_participant['visionWardsBoughtInGame'],
-                        info_participant['wardsKilled'],
-                        info_participant['wardsPlaced'],
-                        info_participant['win']
-                    )
-                    '''
-                    print('ola')
+                            save_objective_info_in_database_use_case.execute(objective)
+
+                    saved_champion = get_champion_by_riot_id_id_use_case.execute(info_participant['championId'])
+
+                    if player_saved and saved_champion:
+                        match_player_details = MatchPlayerDetailsModel(
+                            assists=info_participant['assists'],
+                            bount_level=info_participant['bountyLevel'],
+                            champ_exp=info_participant['champExperience'],
+                            champion_level=info_participant['champLevel'],
+                            champion_id=saved_champion.id,
+                            consumables_purchased=info_participant['consumablesPurchased'],
+                            damage_dealt_to_objectives=info_participant['damageDealtToObjectives'],
+                            damage_dealt_to_turrets=info_participant['damageDealtToTurrets'],
+                            damage_self_mitigated=info_participant['damageSelfMitigated'],
+                            deaths=info_participant['deaths'],
+                            damage_dealt_to_buildings=info_participant['damageDealtToBuildings'],
+                            detector_wards_placed=info_participant['detectorWardsPlaced'],
+                            double_kills=info_participant['doubleKills'],
+                            dragon_kills=info_participant['dragonKills'],
+                            first_blood_assist=1 if info_participant['firstBloodAssist'] else 0,
+                            first_blood_kill=1 if info_participant['firstBloodKill'] else 0,
+                            first_tower_assist=1 if info_participant['firstTowerAssist'] else 0,
+                            first_tower_kill=1 if info_participant['firstTowerKill'] else 0,
+                            gold_earned=info_participant['goldEarned'],
+                            gold_spent=info_participant['goldSpent'],
+                            individual_position_id=individual_position_saved,
+                            inhibitor_kills=info_participant['inhibitorKills'],
+                            inhibitor_lost=info_participant['inhibitorsLost'],
+                            inhibitor_takedowns=info_participant['inhibitorTakedowns'],
+                            items_purchased=info_participant['itemsPurchased'],
+                            killing_sprees=info_participant['killingSprees'],
+                            kills=info_participant['kills'],
+                            lane=info_participant['lane'],
+                            largest_critical_strike=info_participant['largestCriticalStrike'],
+                            largest_killing_spree=info_participant['largestKillingSpree'],
+                            largest_multi_kill=info_participant['largestMultiKill'],
+                            longest_time_spent_living=info_participant['longestTimeSpentLiving'],
+                            magic_damage_dealt=info_participant['magicDamageDealt'],
+                            magic_damage_dealt_to_champions=info_participant['magicDamageDealtToChampions'],
+                            magic_damage_taken=info_participant['magicDamageTaken'],
+                            match_info_team_id=match_info_saved,
+                            neutral_minions_killed=info_participant['neutralMinionsKilled'],
+                            nexus_kills=info_participant['nexusKills'],
+                            nexus_lost=info_participant['nexusLost'],
+                            nexus_takedowns=info_participant['nexusTakedowns'],
+                            objective_stolen=info_participant['objectivesStolen'],
+                            objective_stolen_assistis=info_participant['objectivesStolenAssists'],
+                            penta_kills=info_participant['pentaKills'],
+                            physical_damage_dealt=info_participant['physicalDamageDealt'],
+                            physical_damage_dealt_to_champions=info_participant['physicalDamageDealtToChampions'],
+                            physical_damage_taken=info_participant['physicalDamageTaken'],
+                            player_id=player_saved.id,
+                            quadra_kills=info_participant['quadraKills'],
+                            role_id=role_saved,
+                            sight_wards_bought_in_game=info_participant['sightWardsBoughtInGame'],
+                            team_early_surrendered=1 if info_participant['teamEarlySurrendered'] else 0,
+                            team_position_id=team_position_saved,
+                            time_ccing_others=info_participant['timeCCingOthers'],
+                            time_played=info_participant['timePlayed'],
+                            total_damage_dealt=info_participant['totalDamageDealt'],
+                            total_damage_dealt_to_champions=info_participant['totalDamageDealtToChampions'],
+                            total_damage_shielded_on_teammates=info_participant['totalDamageShieldedOnTeammates'],
+                            total_damage_taken=info_participant['totalDamageTaken'],
+                            total_heal=info_participant['totalHeal'],
+                            total_heal_on_teammates=info_participant['totalHealsOnTeammates'],
+                            total_minions_killed=info_participant['totalMinionsKilled'],
+                            total_time_cc_dealt=info_participant['totalTimeCCDealt'],
+                            total_time_spent_dead=info_participant['totalTimeSpentDead'],
+                            total_units_healed=info_participant['totalUnitsHealed'],
+                            triple_kills=info_participant['tripleKills'],
+                            true_damage_dealt=info_participant['trueDamageDealt'],
+                            true_damage_dealt_to_champions=info_participant['trueDamageDealtToChampions'],
+                            true_damage_taken=info_participant['trueDamageTaken'],
+                            turret_kills=info_participant['turretKills'],
+                            turrets_takedowns=info_participant['turretTakedowns'],
+                            turrets_lost=info_participant['turretsLost'],
+                            unreal_kills=info_participant['unrealKills'],
+                            vision_score=info_participant['visionScore'],
+                            vision_wards_bought_in_game=info_participant['visionWardsBoughtInGame'],
+                            wards_killed=info_participant['wardsKilled'],
+                            wards_placed=info_participant['wardsPlaced'],
+                        )
+
+                        saved_match_player_details = save_match_player_details_use_case.execute(match_player_details)
+                        print(f"\nPlayer adicionado")

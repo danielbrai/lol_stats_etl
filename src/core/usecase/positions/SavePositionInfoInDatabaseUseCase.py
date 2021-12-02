@@ -16,8 +16,8 @@ class SavePositionInfoInDatabaseUseCase:
         saved_position = self.get_position_info_from_database_use_case.execute(position_name)
 
         if saved_position:
-            return saved_position
+            return saved_position.id
         else:
             position = PositionModel(id=None, position=position_name)
-            a = self.repository.save_position_in_database(position)
-            return a
+            return self.repository.save_position_in_database(position)
+
